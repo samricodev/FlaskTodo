@@ -11,6 +11,7 @@ def get_db():
             user = current_app.config['DATABASE_USER'],
             password = current_app.config['DATABASE_PASSWORD'],
             database = current_app.config['DATABASE'],
+            port = 3307
         )
         g.c = g.db.cursor(dictionary=True)
     return g.db, g.c
