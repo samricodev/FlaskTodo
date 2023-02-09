@@ -1,4 +1,30 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 body {
-    background-color: #202020;
-    color: white;
+    font-family: 'Euclid Circular A', sans-serif;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    padding: 1rem 2rem;
+}
+
+.navbar-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #333;
+}
+
+.navbar ul {
+    display: flex;
+    list-style: none;
+}
+
+.navbar ul li {
+    margin-left: 1rem;
 }
