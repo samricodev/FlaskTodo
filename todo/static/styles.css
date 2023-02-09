@@ -9,6 +9,8 @@ body {
 }
 
 .navbar {
+    background-color: #202020;
+    color: #efefef;
     display: flex;
     justify-content: space-between;
     padding: 1rem 2rem;
@@ -17,7 +19,6 @@ body {
 .navbar-title {
     font-size: 1.5rem;
     font-weight: 600;
-    color: #333;
 }
 
 .navbar ul {
@@ -27,4 +28,13 @@ body {
 
 .navbar ul li {
     margin-left: 1rem;
+}
+
+.navbar ul li a {
+    text-decoration: none;
+    color: #efefef;
+}
+
+.navbar ul li a:hover {
+    color: skyblue;
 }
