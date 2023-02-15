@@ -8,11 +8,16 @@ body {
     font-family: 'Euclid Circular A', sans-serif;
 }
 
+h1 {
+    margin-bottom: 10px;
+}
+
 .navbar {
     background-color: #202020;
     color: #efefef;
     display: flex;
     justify-content: space-between;
+    align-items: baseline;
     padding: 1rem 2rem;
 }
 
@@ -37,4 +42,83 @@ body {
 
 .navbar ul li a:hover {
     color: skyblue;
+}
+
+.content {
+    margin: 2rem;
+}
+
+form {
+    width: 35%;
+    margin-right:50%;
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+form input {
+    background-color: gainsboro;
+    border-radius: 10px;
+    height: 2rem;
+    margin-bottom: 5px;
+    border: none;
+}
+
+form label {
+    font-size: larger;
+}
+
+ul {
+    list-style: none;
+}
+
+.todo {
+    margin: 10px 0px 10px 0px;
+}
+
+.about {
+    margin-bottom: 15px;
+}
+
+.btn {
+    background-color: skyblue;
+    border-radius: 10px;
+    font-weight: bold;
+    margin-top: 10px;
+    border: none;
+    padding: 5px;
+    width: auto;
+}
+
+.action-create {
+    background-color: green;
+    text-decoration: none;
+    border-radius: 10px;
+    font-weight: bold;
+    margin: 10px 0px 10px 0;
+    border: none;
+    color: #eee;
+    padding: 5px;
+    width: auto;
+}
+
+.action-edit {
+    background-color: orange;
+    text-decoration: none;
+    border-radius: 10px;
+    font-weight: bold;
+    margin: 20px 0px 10px 0;
+    border: none;
+    color: #000;
+    padding: 5px;
+    width: auto;
+}
+
+.danger {
+    background-color: red;
+    color: #000;
+}
+
+.save {
+    background-color: green;
 }

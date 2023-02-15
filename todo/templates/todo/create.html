@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-
+<link rel="stylesheet" href="{{ url_for('static',filename='styles.css') }}">
 {% block header %}
     <h1>{% block title %} Nuevo Todo{% endblock %}</h1>
 {% endblock  %}
@@ -8,6 +8,6 @@
     <form method="post">
         <label for="description">Descripción</label>
         <input name="description" id="description" required />
-        <input type="submit" value="Guardar" />
+        <input type="submit" value="Guardar" class="action-create"/>
     </form>
 {% endblock  %}

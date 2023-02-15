@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-
+<link rel="stylesheet" href="{{ url_for('static',filename='styles.css') }}">
 {% block header %}
     <h1>{% block title %}Registro{% endblock %}</h1>
 {% endblock %}
@@ -10,6 +10,6 @@
         <input name="username" id="username"  required/>
         <label for="password">Password</label>
         <input name="password" id="password"  required/>
-        <input type="submit" value="Registrarse" />
+        <input type="submit" value="Registrarse" class="btn"/>
     </form>
 {%  endblock %}
