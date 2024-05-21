@@ -1,8 +1,13 @@
 import os
 from flask import Flask
+from flask_sslify import SSLify
+
 
 def create_app():
     app = Flask(__name__)
+    
+    sslify = SSLify(app)
+    
     app.config.from_mapping(
         SECRET_KEY = 'mikey',
         DATABASE_HOST = os.environ.get('FLASK_DATABASE_HOST'),
