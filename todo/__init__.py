@@ -1,12 +1,12 @@
 import os
 from flask import Flask
-from flask_sslify import SSLify
+#from flask_sslify import SSLify
 
 
 def create_app():
     app = Flask(__name__)
-    
-    sslify = SSLify(app)
+    app.secret_key = "12345" #Secret Key
+   # sslify = SSLify(app)
     
     app.config.from_mapping(
         SECRET_KEY = 'mikey',
@@ -29,5 +29,6 @@ def create_app():
     @app.route('/hola') 
     def hola():
         return 'Hola Mundo'
+    
 
     return app
