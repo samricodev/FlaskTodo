@@ -1,29 +1,16 @@
 import re
-import random
 import functools
-from flask_mail import Mail, Message
 from flask import(
-    Blueprint, flash, g, render_template, request, url_for,session, redirect
+    Blueprint, flash, g, render_template, request, url_for,session, redirect, current_app
 )
 from werkzeug.security import check_password_hash,generate_password_hash
 from todo.db import get_db
 
-def generate_verification_code(length=6):
-    characters = '0123456789'
-    verification_code = ''.join(random.choice(characters) for i in range(length))
-    return verification_code
-
-def send_verification_email(email, verification_code):
-    msg = Message('Código de verificación de registro', sender='TodoFlask <juanjopero2000@gmail.com>', recipients=[email])
-    msg.body = f"""
-    Hola {username},
-    Para completar tu registro, ingresa el siguiente código de verificación:
-    {verification_code}
-    Este código es válido por 5 minutos.
-    Atentamente TodoFlask
-    """
-    mail.send(msg)
-
+#Libraries for email sending
+import smtplib
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
+import secrets
 
 bp = Blueprint('auth', __name__,url_prefix='/auth')
 
@@ -58,11 +45,11 @@ def register():
                       (username, email, password_hash))
             db.commit()
             
-            verification_code = generate_verification_code()
+            verification_code = secrets.token_hex(3) 
+         
             session['verification_code'] = verification_code
-            session['email'] = email
+            flash('Please check your email for verification code.')
             send_verification_email(email, verification_code)
-            
             return redirect(url_for('auth.login'))
 
         flash(error)
@@ -125,3 +112,28 @@ def login_required(view):
 def logout():
     session.clear()
     return redirect(url_for('auth.login'))
+
+
+def send_verification_email(to_email, verification_code):
+    subject = "Tu código de verificación"
+    body = f"Tu código de verificación es: {verification_code}"
+
+    msg = MIMEMultipart()
+    EMAIL_ADDRESS = current_app.config["EMAIL_ADDRESS"]
+    EMAIL_PASSWORD = current_app.config["EMAIL_PASSWORD"]
+    msg['From'] = EMAIL_ADDRESS
+    msg['To'] = to_email
+    msg['Subject'] = subject
+
+    msg.attach(MIMEText(body, 'plain'))
+
+    try:
+        server = smtplib.SMTP('smtp.gmail.com', 587)
+        server.starttls()
+        server.login(EMAIL_ADDRESS, EMAIL_PASSWORD)
+        text = msg.as_string()
+        server.sendmail(EMAIL_ADDRESS, to_email, text)
+        server.quit()
+        print("Correo enviado exitosamente")
+    except Exception as e:
+        print(f"Error al enviar correo: {e}")

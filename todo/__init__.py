@@ -1,6 +1,5 @@
 import os
 from flask import Flask
-from flask_mail import Mail, Message
 
 def create_app():
     app = Flask(__name__)
@@ -11,7 +10,9 @@ def create_app():
         DATABASE_HOST = os.environ.get('FLASK_DATABASE_HOST'),
         DATABASE_PASSWORD = os.environ.get('FLASK_DATABASE_PASSWORD'),
         DATABASE_USER = os.environ.get('FLASK_DATABASE_USER'),
-        DATABASE = os.environ.get('FLASK_DATABASE')
+        DATABASE = os.environ.get('FLASK_DATABASE'),
+        EMAIL_ADDRESS = os.getenv('EMAIL_ADDRESS'),
+        EMAIL_PASSWORD = os.getenv('EMAIL_PASSWORD')
     )
     
     app.config['MAIL_SERVER'] = 'smtp.gmail.com'
@@ -19,8 +20,6 @@ def create_app():
     app.config['MAIL_USE_TLS'] = True
     app.config['MAIL_USERNAME'] = 'juanjopero2000@gmail.com'
     app.config['MAIL_PASSWORD'] = 'rycu vret obdh ntuj'
-
-    mail = Mail(app)
 
     from . import db
 
