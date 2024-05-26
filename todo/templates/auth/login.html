@@ -1,15 +1,67 @@
 {% extends 'base.html' %}
-<link rel="stylesheet" href="{{ url_for('static',filename='styles.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+
 {% block header %}
 <h1>{% block title %}Iniciar sesión{% endblock %}</h1>
 {% endblock %}
 
 {% block content %}
-    <form method="post">
-        <label for="username">Username</label>
-        <input name="username" id="username"  required/>
-        <label for="password">Password</label>
-        <input name="password" id="password"  required/>
-        <input type="submit" value="Iniciar sesión" class="btn"/>
-    </form>
-{%  endblock %}
+  <form method="post">
+    <label for="username">Username</label>
+    <input name="username" id="username" required />
+
+    <label for="verification_code">Verification Code</label>
+    <input name="verification_code" id="verification_code" required />
+
+    <label for="password">Password</label>
+    <div class="password-container">
+      <input type="password" name="password" id="password" required />
+      <button class="password-toggle">Ver</button> </div>
+
+    <input type="submit" value="Iniciar sesión" class="btn" />
+  </form>
+
+  <style>
+    .password-container {
+      position: relative; /* For positioning the button */
+    }
+
+    .password-toggle {
+      background-color: #5bd450; /* Green */
+      border-radius: 20px;
+      border: none;
+      color: white;
+      padding: 10px 15px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 16px;
+      margin-left: 10px;
+      cursor: pointer;
+    }
+
+    .password-toggle:hover {
+      background-color: #e01c1c; /* Darker green on hover */
+    }
+  </style>
+
+  <script>
+    const passwordToggleBtn = document.querySelector('.password-toggle');
+    const passwordInput = document.getElementById('password');
+    const form = document.querySelector('form'); // Get the form element
+
+    passwordToggleBtn.addEventListener('click', function(event) {
+      // Prevent default form submission
+      event.preventDefault();
+
+      // Toggle password visibility and button text
+      if (passwordInput.type === 'password') {
+        passwordInput.type = 'text';
+        passwordToggleBtn.textContent = 'Ocultar';
+      } else {
+        passwordInput.type = 'password';
+        passwordToggleBtn.textContent = 'Ver';
+      }
+    });
+  </script>
+{% endblock %}
