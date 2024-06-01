@@ -11,6 +11,7 @@ instructions = [
             paternal VARCHAR(100) NOT NULL,
             maternal VARCHAR(100) NOT NULL,
             birthdate DATE NOT NULL,
+            phone VARCHAR(10) NOT NULL,
             email VARCHAR(50) UNIQUE NOT NULL,
             password VARCHAR(150) NOT NULL
         );

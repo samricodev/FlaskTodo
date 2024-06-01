@@ -26,6 +26,7 @@ def register():
         name = request.form['name']
         paternal = request.form['paternal']
         maternal = request.form['maternal']
+        phone = request.form['phone']
         email = request.form['email']
         password = request.form['password']
         birthdate = request.form['birthdate']
@@ -46,6 +47,13 @@ def register():
             
         if not email:
             error = 'Email is required'
+            
+        if not phone:
+            error = 'Phone is required'
+            
+        phone_regex = re.compile(r'^\d{10}$')
+        if not phone_regex.match(phone):
+            error = 'Phone must contain 10 digits'
 
         password_regex = re.compile(r'^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[!@#$%^&*])(?=.{8,})')
         if not password_regex.match(password):
@@ -64,8 +72,8 @@ def register():
         if error is None:
             password_hash = generate_password_hash(password)
 
-            c.execute('insert into user (username, name, paternal, maternal, birthdate, email, password) values (%s, %s, %s, %s, %s, %s, %s)',
-                      (username, name, paternal, maternal, birthdate, email, password_hash))
+            c.execute('insert into user (username, name, paternal, maternal, birthdate, phone, email, password) values (%s, %s, %s, %s, %s, %s, %s, %s)',
+                      (username, name, paternal, maternal, birthdate, phone, email, password_hash))
             db.commit()
             
             verification_code = secrets.token_hex(3) 
