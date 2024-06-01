@@ -7,6 +7,10 @@ instructions = [
         CREATE TABLE user (
             id INT PRIMARY KEY AUTO_INCREMENT,
             username VARCHAR(50) UNIQUE NOT NULL,
+            name VARCHAR(100) NOT NULL,
+            paternal VARCHAR(100) NOT NULL,
+            maternal VARCHAR(100) NOT NULL,
+            birthdate DATE NOT NULL,
             email VARCHAR(50) UNIQUE NOT NULL,
             password VARCHAR(150) NOT NULL
         );

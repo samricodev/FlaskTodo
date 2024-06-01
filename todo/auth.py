@@ -1,4 +1,7 @@
 import re
+import os
+from dotenv import load_dotenv
+
 import functools
 from flask import(
     Blueprint, flash, g, render_template, request, url_for,session, redirect, current_app
@@ -12,19 +15,34 @@ from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 import secrets
 
+load_dotenv()
+
 bp = Blueprint('auth', __name__,url_prefix='/auth')
 
 @bp.route('/register', methods=['GET', 'POST'])
 def register():
     if request.method == 'POST':
         username = request.form['username']
+        name = request.form['name']
+        paternal = request.form['paternal']
+        maternal = request.form['maternal']
         email = request.form['email']
         password = request.form['password']
+        birthdate = request.form['birthdate']
         db, c = get_db()
         error = None
 
         if not username:
             error = 'Username is required'
+            
+        if not name:
+            error = 'Name is required'
+            
+        if not paternal:
+            error = 'Last name is required'
+        
+        if not maternal:
+            error = 'Last name  name is required'
             
         if not email:
             error = 'Email is required'
@@ -37,16 +55,20 @@ def register():
             c.execute('select id from user where username = %s', (username,))
             if c.fetchone() is not None:
                 error = 'Username "{}" is already registered.'.format(username)
+            
+            if c.fetchone() is None:
+                c.execute('select id from user where email = %s', (email,))
+                if c.fetchone() is not None:
+                    error = 'Email "{}" is already registered.'.format(email)
 
         if error is None:
             password_hash = generate_password_hash(password)
 
-            c.execute('insert into user (username, email, password) values (%s, %s, %s)',
-                      (username, email, password_hash))
+            c.execute('insert into user (username, name, paternal, maternal, birthdate, email, password) values (%s, %s, %s, %s, %s, %s, %s)',
+                      (username, name, paternal, maternal, birthdate, email, password_hash))
             db.commit()
             
             verification_code = secrets.token_hex(3) 
-         
             session['verification_code'] = verification_code
             flash('Please check your email for verification code.')
             send_verification_email(email, verification_code)
