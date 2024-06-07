@@ -13,7 +13,8 @@ instructions = [
             birthdate DATE NOT NULL,
             phone VARCHAR(10) NOT NULL,
             email VARCHAR(50) UNIQUE NOT NULL,
-            password VARCHAR(150) NOT NULL
+            password VARCHAR(150) NOT NULL,
+            FOREIGN KEY (role) REFERENCES role (id)
         );
     """,
     """
@@ -25,5 +26,20 @@ instructions = [
             completed BOOLEAN NOT NULL,
             FOREIGN KEY (created_by) REFERENCES user (id)
         );
+    """,
+    """
+        CREATE TABLE  role (
+            id INT PRIMARY KEY AUTO_INCREMENT,
+            name VARCHAR(50) UNIQUE NOT NULL
+        );
+    """,
+    """
+        INSERT INTO role (name) VALUES ('admin');
+    """,
+    """
+        INSERT INTO role (name) VALUES ('user');
+    """,
+    """
+        INSERT INTO user (username, name, paternal, maternal, birthdate, phone, email, password, role)  values ('admin',)
     """
 ]
