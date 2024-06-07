@@ -17,12 +17,6 @@ def create_app():
         EMAIL_ADDRESS = os.getenv('EMAIL_ADDRESS'),
         EMAIL_PASSWORD = os.getenv('EMAIL_PASSWORD')
     )
-    
-    app.config['MAIL_SERVER'] = 'smtp.gmail.com'
-    app.config['MAIL_PORT'] = 587
-    app.config['MAIL_USE_TLS'] = True
-    app.config['MAIL_USERNAME'] = 'juanjopero2000@gmail.com'
-    app.config['MAIL_PASSWORD'] = 'rycu vret obdh ntuj'
 
     from . import db
 
@@ -30,9 +24,11 @@ def create_app():
 
     from . import auth
     from . import todo
+    from . import admin
 
     app.register_blueprint(auth.bp)
     app.register_blueprint(todo.bp)
+    app.register_blueprint(admin.bp)
 
     @app.route('/hola') 
     def hola():

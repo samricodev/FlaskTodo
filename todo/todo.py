@@ -13,7 +13,7 @@ bp = Blueprint('todo', __name__)
 def index():
     db, c = get_db()
     c.execute(
-		'select t.id, t.description, u.username, t.completed, t.created_at '
+		'select t.id, t.title, t.description, u.username, t.completed, t.created_at '
   		'from todo t JOIN user u on t.created_by = u.id where t.created_by = %s order by created_at desc',
 		(g.user['id'],)
 	)
@@ -26,8 +26,12 @@ def index():
 @login_required
 def create():
     if request.method == 'POST':
+        title = request.form['title']
         description = request.form['description']
         error = None
+        
+        if not title:
+            error = 'Título es requerido.'
         
         if not description:
             error = 'Descripción es requerida.'
@@ -37,9 +41,9 @@ def create():
         else:
             db, c = get_db()
             c.execute(
-				'insert into todo (description, completed, created_by)'
-    			' values (%s,%s,%s)',
-				(description, False, g.user['id'])
+				'insert into todo (title, description, completed, created_by)'
+    			' values (%s,%s,%s,%s)',
+				(title, description, False, g.user['id'])
 			)  
             db.commit()
             return redirect( url_for('todo.index'))     
@@ -48,7 +52,7 @@ def create():
 def get_todo(id):
     db, c= get_db()
     c.execute(
-		'select t.id, t.description, t.completed, t.created_by, t.created_at, u.username '
+		'select t.id, t.title, t.description, t.completed, t.created_by, t.created_at, u.username '
   		'from todo t join user u on t.created_by = u.id where t.id = %s',
     	(id,)
 	)
@@ -66,9 +70,13 @@ def update(id):
     todo = get_todo(id)
     
     if request.method == 'POST':
+        title = request.form['title']
         description = request.form['description']
         completed = True if request.form.get('completed') == 'on' else False
         error = None
+        
+        if not title:
+            error = "El título es requerido."
         
         if not description:
             error = "La descripción es requerida."
@@ -78,9 +86,9 @@ def update(id):
         else:
             db, c = get_db()
             c.execute(
-				'update todo set description = %s, completed = %s'
+				'update todo set title = %s, description = %s, completed = %s'
 				' where id = %s and created_by = %s',
-				(description,completed,id,g.user['id'])
+				(title,description,completed,id,g.user['id'])
 			)
             db.commit()
             return redirect( url_for('todo.index'))

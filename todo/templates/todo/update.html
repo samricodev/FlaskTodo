@@ -6,6 +6,8 @@
 
 {% block content %}
     <form method="post">
+        <label for="title">Titulo</label>
+        <input name="title" id="title" value="{{ request.form['title'] or todo['title'] }}" required >
         <label for="description">Descripción</label>
         <input name="description" id="description" value="{{ request.form['description'] or todo['description'] }}" required >
         <label for="completed">Completado</label>

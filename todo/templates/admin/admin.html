@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+<link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+
+{% block header %}
+<h1>Admin - Users/Todos</h1>
+{% endblock %}
+
+{% block content %}
+<h2>Usuarios</h2>
+<div class="user-cards">
+  {% for user in users %}
+    <div class="user-card">
+      <h2>{{ user['username'] }}</h2>
+    </div>
+  {% endfor %}
+</div>
+
+<h2>Tareas Completadas</h2>
+<div class="todo-cards completed">
+  {% for todo in completed_todos %}
+    <div class="todo-card">
+      <h3>{{ todo['title'] }}</h3>
+      <p class="todo-description">{{ todo['description'] }}</p>
+      <div class="about">
+        {{ todo['created_at'].strftime('%Y-%m-%d') }} por {{ todo['username'] }}
+      </div>
+    </div>
+  {% endfor %}
+</div>
+
+<h2>Tareas Pendientes</h2>
+<div class="todo-cards incomplete">
+  {% for todo in incomplete_todos %}
+    <div class="todo-card">
+      <h3>{{ todo['title'] }}</h3>
+      <p class="todo-description">{{ todo['description'] }}</p>
+      <div class="about">
+        {{ todo['created_at'].strftime('%Y-%m-%d') }} por {{ todo['username'] }}
+      </div>
+    </div>
+  {% endfor %}
+</div>
+{% endblock %}

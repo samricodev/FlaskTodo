@@ -14,11 +14,18 @@
                 <div>
                     <h1>
                         {% if todo['completed'] == 1 %}
+                            <strike>{{ todo['title'] }}</strike>
+                            {% else %}
+                            {{ todo['title'] }}
+                        {% endif %}
+                    </h1>
+                    <p class="todo-description">
+                        {% if todo['completed'] == 1 %}
                             <strike>{{ todo['description'] }}</strike>
                             {% else %}
                             {{ todo['description'] }}
                         {% endif %}
-                    </h1>
+                    </p>
                     <div class="about">
                         {{ todo['created_at'].strftime('%Y-%m-%d') }}
                     </div>
